@@ -2,10 +2,17 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 
 import Test from './components/Test.vue'
+import Home from './components/Home.vue'
+
 const routes = [{
-    path: "/test",
-    component: Test
-}, ]
+        path: "/test",
+        component: Test
+    },
+    {
+        path: '/Home',
+        component: Home
+    }
+]
 Vue.use(VueRouter);
 
 
