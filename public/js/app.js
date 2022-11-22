@@ -5580,9 +5580,57 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_vm._v("\n    HomeOverView\n")]);
+  return _c("div", [[_vm._m(0)]], 2);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", [_c("h2", {
+    staticClass: "text-2xl pt-24"
+  }, [_vm._v("年度給与計算")]), _vm._v(" "), _c("div", {
+    staticClass: "grid md:grid-cols-4 sm:grid-cols-2 gap-2 mt-8"
+  }, [_c("div", {
+    staticClass: "flex items-center py-6 px-3 bg-white border-l-8 border-red-200 rounded-lg shadow-md"
+  }, [_c("h2", [_c("i", {
+    staticClass: "ri-calendar-2-line text-4xl text-red-400"
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "pl-6"
+  }, [_c("p", {
+    staticClass: "text-xl"
+  }, [_vm._v("円")]), _vm._v(" "), _c("p", {
+    staticClass: "pt-2"
+  }, [_vm._v("今月の給与")])])]), _vm._v(" "), _c("div", {
+    staticClass: "flex items-center py-6 px-3 bg-white border-l-8 border-blue-200 rounded-lg shadow-md"
+  }, [_c("h2", [_c("i", {
+    staticClass: "ri-calendar-fill text-4xl text-blue-400"
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "pl-6"
+  }, [_c("p", {
+    staticClass: "text-xl"
+  }, [_vm._v("円")]), _vm._v(" "), _c("p", {
+    staticClass: "pt-2"
+  }, [_vm._v("今年度の給与")])])]), _vm._v(" "), _c("div", {
+    staticClass: "flex items-center py-6 px-3 bg-red-400 text-white border-l-8 border-green-200 rounded-lg shadow-md"
+  }, [_c("h2", [_c("i", {
+    staticClass: "ri-lock-line text-4xl text-green-400"
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "pl-6"
+  }, [_c("p", {
+    staticClass: "text-xl"
+  }, [_vm._v("0円")]), _vm._v(" "), _c("p", {
+    staticClass: "pt-2"
+  }, [_vm._v("103万まで")])])]), _vm._v(" "), _c("div", {
+    staticClass: "flex items-center py-6 px-3 bg-red-400 text-white border-l-8 border-yellow-200 rounded-lg shadow-md"
+  }, [_c("h2", [_c("i", {
+    staticClass: "ri-lock-fill text-4xl text-yellow-400"
+  })]), _vm._v(" "), _c("div", {
+    staticClass: "pl-6"
+  }, [_c("p", {
+    staticClass: "text-xl"
+  }, [_vm._v("0円")]), _vm._v(" "), _c("p", {
+    staticClass: "pt-2"
+  }, [_vm._v("130万まで")])])])])]);
+}];
 render._withStripped = true;
 
 
@@ -11080,10 +11128,10 @@ defineJQueryPlugin(Toast);
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vuetify/dist/vuetify.min.css":
-/*!***********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vuetify/dist/vuetify.min.css ***!
-  \***********************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vuetify/dist/vuetify.min.css":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vuetify/dist/vuetify.min.css ***!
+  \*************************************************************************************************************************************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -28405,6 +28453,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/css/app.css":
+/*!*******************************!*\
+  !*** ./resources/css/app.css ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
 /***/ "./node_modules/process/browser.js":
 /*!*****************************************!*\
   !*** ./node_modules/process/browser.js ***!
@@ -28612,7 +28673,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
 /* harmony import */ var _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _css_loader_dist_cjs_js_clonedRuleSet_9_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_vuetify_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./vuetify.min.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vuetify/dist/vuetify.min.css");
+/* harmony import */ var _css_loader_dist_cjs_js_clonedRuleSet_10_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_vuetify_min_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!../../postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./vuetify.min.css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-10.use[1]!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-10.use[2]!./node_modules/vuetify/dist/vuetify.min.css");
 
             
 
@@ -28621,11 +28682,11 @@ var options = {};
 options.insert = "head";
 options.singleton = false;
 
-var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_vuetify_min_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
+var update = _style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_vuetify_min_css__WEBPACK_IMPORTED_MODULE_1__["default"], options);
 
 
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_vuetify_min_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_css_loader_dist_cjs_js_clonedRuleSet_10_use_1_postcss_loader_dist_cjs_js_clonedRuleSet_10_use_2_vuetify_min_css__WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
 
 /***/ }),
 
@@ -91146,7 +91207,8 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/sass/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/sass/app.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
