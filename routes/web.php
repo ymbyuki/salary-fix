@@ -7,25 +7,19 @@ use Illuminate\Support\Facades\Route;
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| ここでアプリケーションのWebルートと登録します。
+| これらの ルートは、"web "ミドルウェア・グループを含むグループ内のRouteServiceProviderによってロードされます。
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/home2', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('/{any}', function () {
-    return view('app');
-})->where('any','.*');
-
-Route::get('/', function () {
-    return view('app');
-});
+Auth::routes(); // 認証用
+Route::get('/', function () {return view('welcome');}); //TOPページ
 
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// 認証後ルーティング
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/{any}', function () {return view('app');})->where('any','.*'); // Vue.jsの historyモード用（これ以下に書いたものは全てvue.jsのrouter.jsで制御されるため、アクセスをさせたい場合はこれより上に記載する。
+    Route::get('/home', function () {return view('app'); }); //Vue.jsロードファイル
+  });

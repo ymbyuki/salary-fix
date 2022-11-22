@@ -5439,7 +5439,30 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("v-app", [_c("header", [_c("h1", [_vm._v("HELLO")])]), _vm._v(" "), _c("v-main", [_c("v-container", {
+  return _c("v-app", [_c("header", [_c("v-app-bar", {
+    attrs: {
+      app: "",
+      prop: ""
+    }
+  }, [_c("v-app-bar-nav-icon", {
+    staticClass: "d-flex d-sm-none"
+  }), _vm._v(" "), _c("v-toolbar-title", [_vm._v("Salary")]), _vm._v(" "), _c("v-spacer"), _vm._v(" "), _c("li", [_c("router-link", {
+    attrs: {
+      to: "/home"
+    }
+  }, [_vm._v("Home")])], 1), _vm._v(" "), _c("li", [_c("router-link", {
+    attrs: {
+      to: "/test"
+    }
+  }, [_vm._v("test")])], 1), _vm._v(" "), _c("v-btn", {
+    attrs: {
+      icon: ""
+    }
+  }, [_c("v-icon", [_vm._v("mdi-briefcase-plus")])], 1), _vm._v(" "), _c("v-btn", {
+    attrs: {
+      icon: ""
+    }
+  }, [_c("v-icon", [_vm._v("mdi-dots-vertical")])], 1)], 1)], 1), _vm._v(" "), _c("v-main", [_c("v-container", {
     attrs: {
       fluid: ""
     }
@@ -5807,7 +5830,7 @@ var routes = [{
   path: "/test",
   component: _components_Test_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
 }, {
-  path: '/Home',
+  path: '/home',
   component: _components_Home_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
 }];
 vue__WEBPACK_IMPORTED_MODULE_2__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]);
