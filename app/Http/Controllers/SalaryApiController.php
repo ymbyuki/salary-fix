@@ -1,4 +1,9 @@
 <?php
+/*
+|--------------------------------------------------------------------------
+| APIコントローラ
+|--------------------------------------------------------------------------
+*/
 
 namespace App\Http\Controllers;
 
@@ -10,17 +15,70 @@ use App\Models\Salary;
 
 class SalaryApiController extends Controller
 {
-
-    public function getYearAllSalary() {
-        $year = date('Y');
-
-        $user = Auth::user();
-        print($user);
-        dd($user);
-        // $user=Salary::where('user_id', $auth)
-        //             ->whereYear('date', $year)
-        //             ->orderBy('date', 'desc')
-        //             ->get();
-        // return $user;
+    function __construct() {
+        $this->salary = new Salary;
     }
+
+    public function initIndexPage () {
+        $totalCost = $this->totalCost();
+        $totalThisMonthCost = $this->totalThisMonthCost();
+        $YearAllSalary = $this->getYearAllSalary();
+        $result = [
+            'totalCost' => $totalCost,
+            'totalThisMonthCost' => $totalThisMonthCost,
+            'YearAllSalary' => $YearAllSalary
+        ];
+        return $result;
+    }
+
+    /**
+     * 今年度の全データ
+     */
+    public function getYearAllSalary() {
+        $data = $this->salary->getYearAllSalary();
+        return $data;
+    }
+
+    /**
+     * 今月の全データ
+     */
+    public function getThisMonthSalary() {
+        $data = $this->salary->getThisMonthSalary();
+        return $data;
+    }
+    
+
+    //個別詳細
+    public function getSalary($id) {
+        $salary=Salary::where('id', $id)->first();
+        return $salary;
+    }
+
+    /**
+     * 今年の合計
+     */
+    public function totalCost() {
+        $data = $this->salary->totalCost();
+        return $data;
+    }
+
+    
+    /**
+     * 今月の合計
+     */
+    public function totalThisMonthCost() {
+        $data = $this->salary->totalThisMonthCost();
+        return $data;
+    }
+
+
+    /**
+     * 全データ取得
+     */
+    public function getAllSalary() {
+        $data = $this->salary->getAllSalary();
+        return $data;
+    }
+
+
 }

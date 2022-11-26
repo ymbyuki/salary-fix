@@ -20,10 +20,7 @@
                 </v-btn>
             </v-app-bar>
         </header>
-        <!-- アプリケーションのコンポーネントに基づいてコンテンツのサイズを決定 -->
         <v-main>
-            <!-- アプリケーションに適切なgutterを提供 -->
-            {{users}}
             <v-container fluid>
                 <router-view></router-view>
             </v-container>
@@ -34,18 +31,3 @@
         </v-footer>
     </v-app>
 </template>
-
-<script>
-
-
-export default {
-    data() {
-        return {
-            users: [],
-        }
-    },
-    mounted() {   
-    axios.get("/api/getYearAllSalary").then((response) => (this.users = response.data));
-    },
-}
-</script>
