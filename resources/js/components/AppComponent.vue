@@ -5,8 +5,12 @@
                 <v-app-bar-nav-icon class="d-flex d-sm-none"></v-app-bar-nav-icon>
                 <v-toolbar-title>Salary</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <li><router-link to="/home">Home</router-link></li>
-                <li><router-link to="/test">test</router-link></li>
+                <li>
+                    <router-link to="/home">Home</router-link>
+                </li>
+                <li>
+                    <router-link to="/test">test</router-link>
+                </li>
 
                 <v-btn icon>
                     <v-icon>mdi-briefcase-plus</v-icon>
@@ -19,6 +23,7 @@
         <!-- アプリケーションのコンポーネントに基づいてコンテンツのサイズを決定 -->
         <v-main>
             <!-- アプリケーションに適切なgutterを提供 -->
+            {{users}}
             <v-container fluid>
                 <router-view></router-view>
             </v-container>
@@ -30,5 +35,17 @@
     </v-app>
 </template>
 
-  
+<script>
 
+
+export default {
+    data() {
+        return {
+            users: [],
+        }
+    },
+    mounted() {   
+    axios.get("/api/getYearAllSalary").then((response) => (this.users = response.data));
+    },
+}
+</script>

@@ -19,3 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/getYearAllSalary', [App\Http\Controllers\SalaryApiController::class, 'getYearAllSalary']);
+Route::get('/test', function (){
+    return('RUNNING');
+});
