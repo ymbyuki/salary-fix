@@ -1,28 +1,32 @@
+<!--
+Component Content：ルートVue
+parent-component：app.js(app.blade.php)
+child-component：NULL
+-->
+
 <template>
     <v-app>
-        <header>
-            <v-app-bar app prop>
-                <v-app-bar-nav-icon class="d-flex d-sm-none"></v-app-bar-nav-icon>
-                <v-toolbar-title>Salary</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <li>
-                    <router-link to="/home">Home</router-link>
-                </li>
-                <li>
-                    <router-link to="/test">test</router-link>
-                </li>
+        <v-app-bar app prop>
+            <v-app-bar-nav-icon class="d-flex d-sm-none"></v-app-bar-nav-icon>
+            <v-toolbar-title>Salary</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <li>
+                <router-link to="/home">Home</router-link>
+            </li>
+            <li>
+                <router-link to="/test">test</router-link>
+            </li>
 
-                <v-btn icon>
-                    <v-icon>mdi-briefcase-plus</v-icon>
-                </v-btn>
-                <v-btn icon>
-                    <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
-            </v-app-bar>
-        </header>
+            <v-btn icon>
+                <v-icon>mdi-briefcase-plus</v-icon>
+            </v-btn>
+            <v-btn icon>
+                <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+        </v-app-bar>
         <v-main>
-            <v-container fluid>
-                <router-view></router-view>
+            <v-container fluid grey lighten-2>
+                <router-view class="pb-8 sm:px-16 px-8 min-h-screen"></router-view>
             </v-container>
         </v-main>
 

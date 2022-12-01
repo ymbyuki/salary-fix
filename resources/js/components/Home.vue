@@ -1,12 +1,15 @@
-<template>
-    <div>
-        <h1>HOME</h1>
-        
-        <HomeOverview></HomeOverview>
-        <HomeList></HomeList>
-    </div>
-</template>
+<!--
+Component Content：ホーム画面用
+parent-component：AppComponent
+child-component：HomeOverview|HomeList
+-->
 
+<template>
+  <div>
+    <HomeOverview></HomeOverview>
+    <HomeList></HomeList>
+  </div>
+</template>
 
 <script>
 import HomeOverview from './HomeOverview.vue';
@@ -16,16 +19,6 @@ export default {
   components: {
     HomeOverview,
     HomeList
-  },
-  data() {
-    return {
-      result:[]
-    }
-  },
-  mounted () {
-    axios.get("/api/getYearAllSalary").then((response) => (this.result = response.data));
   }
 }
-
-
 </script>

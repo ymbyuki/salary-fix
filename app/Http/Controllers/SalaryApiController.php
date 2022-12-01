@@ -22,11 +22,9 @@ class SalaryApiController extends Controller
     public function initIndexPage () {
         $totalCost = $this->totalCost();
         $totalThisMonthCost = $this->totalThisMonthCost();
-        $YearAllSalary = $this->getYearAllSalary();
         $result = [
             'totalCost' => $totalCost,
             'totalThisMonthCost' => $totalThisMonthCost,
-            'YearAllSalary' => $YearAllSalary
         ];
         return $result;
     }
@@ -49,10 +47,13 @@ class SalaryApiController extends Controller
     
 
     //個別詳細
-    public function getSalary($id) {
+    public function getSalary(Request $request) {
+        $id = $request->id;
         $salary=Salary::where('id', $id)->first();
         return $salary;
     }
+    
+
 
     /**
      * 今年の合計

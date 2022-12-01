@@ -1,5 +1,4 @@
 import router from "./router";
-import AppComponent from "./components/AppComponent";
 import "remixicon/fonts/remixicon.css";
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -32,6 +31,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 import Vue from 'vue'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
+import AppComponent from "./components/AppComponent";
 
 Vue.use(Vuetify);
 const app = new Vue({
