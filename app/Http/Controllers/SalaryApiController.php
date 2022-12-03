@@ -20,6 +20,9 @@ class SalaryApiController extends Controller
         $this->salary = new Salary;
     }
 
+    /**
+     * 初期化
+     */
     public function initIndexPage()
     {
         $totalCost = $this->totalCost();
@@ -89,39 +92,14 @@ class SalaryApiController extends Controller
         return $data;
     }
 
+
     /**
      * 登録処理
      */
     public function update(Request $request)
     {
-        $data = $request;
-        $validatedData = $data->validate([
-            'money' => ['numeric'],
-        ]);
-        try {
-            $result = Salary::where('id', $request->id)->update([
-                'date' => $request->date,
-                'bank' => $request->bank,
-                'workplace' => $request->workplace,
-                'money' => $request->money,
-            ]);
-        } catch (QueryException $e) {
-            print("NOT COMPLEATED");
-            dd($e);
-        }
-        if ($result === 1) {
-            $respons = [
-                'status' => 'true',
-                'content' => $request,
-            ];
-        } else {
-            $respons = [
-                'status' => 'false',
-                'content' => '',
-            ];
-        }
-
-        print(json_encode($respons));
+        $data = $this->salary->itemUpdate($request);
+        return $data;
     }
 
     /**
@@ -129,20 +107,7 @@ class SalaryApiController extends Controller
      */
     public function delete(Request $request)
     {
-        $id = $request->id;
-        try {
-            Salary::find($id)->delete();
-            $respons = [
-                'status' => 'true',
-                'content' => $request,
-            ];
-        } catch (\Throwable $th) {
-            $respons = [
-                'status' => 'false',
-                'content' => '',
-            ];
-        } finally {
-            print(json_encode($respons));
-        }
+        $data = $this->salary->deleteitem($request);
+        return $data;
     }
 }
