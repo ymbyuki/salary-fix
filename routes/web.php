@@ -33,8 +33,6 @@ Route::group(['middleware' => 'auth'], function () {
   Route::prefix('api')->group(function () {
     /* CREATE */
     Route::post('/store', [App\Http\Controllers\SalaryApiController::class, 'store']); //本年度の全てのデータ取得
-    Route::post('/update', [App\Http\Controllers\SalaryApiController::class, 'update']); //本年度の全てのデータ取得
-    Route::post('/delete', [App\Http\Controllers\SalaryApiController::class, 'delete']); //本年度の全てのデータ取得
 
     /* READ */
     Route::post('/initIndexPage', [App\Http\Controllers\SalaryApiController::class, 'initIndexPage']); //本年度の全てのデータ取得
@@ -44,10 +42,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/totalCost', [App\Http\Controllers\SalaryApiController::class, 'totalCost']); //今年の合計
     Route::get('/totalThisMonthCost', [App\Http\Controllers\SalaryApiController::class, 'totalThisMonthCost']); //今年の合計
     Route::get('/getAllSalary', [App\Http\Controllers\SalaryApiController::class, 'getAllSalary']); //全データ取得
+    Route::post('/selectBankList', [App\Http\Controllers\SalaryApiController::class, 'selectBankList']); //全データ取得
 
     /* UPDATE */
+    Route::post('/update', [App\Http\Controllers\SalaryApiController::class, 'update']); //本年度の全てのデータ取得
 
     /* DELETE */
+    Route::post('/delete', [App\Http\Controllers\SalaryApiController::class, 'delete']); //本年度の全てのデータ取得
+
   });
   /*
   |------------------------------------------------------------------------

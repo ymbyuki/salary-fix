@@ -82,7 +82,7 @@ class Salary extends Model
         return $user;
     }
 
-        /**
+    /**
      * 登録処理
      */
     public function itemUpdate($item)
@@ -136,5 +136,15 @@ class Salary extends Model
         } finally {
             return (json_encode($respons));
         }
+    }
+
+    /**
+     * 銀行のリスト取得
+     */
+    public function selectBankList()
+    {
+        $auth = auth()->user()->id;
+        $bankList = Salary::select('bank')->where('user_id', $auth)->groupBy('bank')->get();
+        return $bankList;
     }
 }

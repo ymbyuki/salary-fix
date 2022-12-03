@@ -8,13 +8,15 @@ child-component：NULL
     <v-app>
         <v-app-bar app prop>
             <v-app-bar-nav-icon class="d-flex d-sm-none"></v-app-bar-nav-icon>
-            <v-toolbar-title>Salary</v-toolbar-title>
+            <v-toolbar-title>
+                <router-link to="/home">Salary</router-link>
+            </v-toolbar-title>
             <v-spacer></v-spacer>
             <li>
                 <router-link to="/home">Home</router-link>
             </li>
             <li>
-                <router-link to="/test">test</router-link>
+                <router-link to="/new">新規登録</router-link>
             </li>
 
             <v-menu bottom left offset-y>

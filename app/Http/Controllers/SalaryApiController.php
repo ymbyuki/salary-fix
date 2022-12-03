@@ -92,6 +92,15 @@ class SalaryApiController extends Controller
         return $data;
     }
 
+    /**
+     * 銀行のリスト取得
+     */
+    public function selectBankList()
+    {
+        $data = $this->salary->selectBankList();
+        return $data;
+    }
+
 
     /**
      * 登録処理

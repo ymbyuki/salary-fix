@@ -22,7 +22,7 @@ child-component：
                                 :readonly="!update">
                             </v-text-field>
                             <v-text-field v-model="money" label="金額" :rules="rules" hide-details="auto"
-                                :readonly="!update">
+                                :readonly="!update" suffix="円">
                             </v-text-field>
                         </v-card-text>
                         <v-card-text class="d-flex justify-end">
