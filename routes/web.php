@@ -32,6 +32,9 @@ Route::group(['middleware' => 'auth'], function () {
   */
   Route::prefix('api')->group(function () {
     /* CREATE */
+    Route::post('/store', [App\Http\Controllers\SalaryApiController::class, 'store']); //本年度の全てのデータ取得
+    Route::post('/update', [App\Http\Controllers\SalaryApiController::class, 'update']); //本年度の全てのデータ取得
+    Route::post('/delete', [App\Http\Controllers\SalaryApiController::class, 'delete']); //本年度の全てのデータ取得
 
     /* READ */
     Route::post('/initIndexPage', [App\Http\Controllers\SalaryApiController::class, 'initIndexPage']); //本年度の全てのデータ取得

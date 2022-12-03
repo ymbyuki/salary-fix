@@ -26,7 +26,7 @@ child-component：modal
         <modal :itemResData="itemResData" :dialog="dialog" @toggleModal="toggleModal" @showAlert="showAlert" />
 
         <transition name="fade">
-            <v-alert type="success" id="alert" v-show="showAlertFlg">{{ alertMessage }}</v-alert>
+            <v-alert :type="alertType" id="alert" v-show="showAlertFlg">{{ alertMessage }}</v-alert>
         </transition>
 
     </div>
@@ -51,16 +51,29 @@ export default {
             nullDataShow: false, //データ件数が0件の場合true
             itemResData: [], //レスポンスのデータ
             dialog: false, //ダイアログの開閉
-            alertMessage: '', //アラートメッセージ（未実装）
+            alertMessage: '', //アラートメッセージ
+            alertType: 'success',
             showAlertFlg: false, //アラートを表示するかどうか
         }
     },
     methods: {
+        initListData: function () {
+            axios.post("/api/getYearAllSalary").then((response) => {
+                const res = response.data; //レスポンスデータ
+
+                //変数へ格納
+                this.YearAllSalary = res;
+
+                //データ件数が0件か確認
+                if (this.YearAllSalary.length === 0) {
+                    this.nullDataShow = true;
+                }
+            });
+        },
         //個別のデータを取得
         sendItem: function (num) {
             axios.post("/api/getSalary", { id: num }).then((response) => {
                 const res = response.data; //レスポンスデータ
-
                 //変数へ格納
                 this.itemResData = res;
                 this.dialog = true
@@ -73,9 +86,17 @@ export default {
         },
 
         //アラートを表示
-        showAlert: function (message) {
-            this.alertMessage = message;
+        showAlert: function (resdate) {
+            if (resdate.status) {
+                this.initListData();
+            }
+            this.alertMessage = resdate.message;
+            if (!resdate.status) {
+                this.alertType = 'error';
+            }
             this.showAlertFlg = true;
+
+            //3秒後に削除
             setTimeout(function () {
                 this.showAlertFlg = false;
             }.bind(this), 3000)
@@ -84,17 +105,7 @@ export default {
     },
     mounted() {
         //ページの初期化
-        axios.post("/api/getYearAllSalary").then((response) => {
-            const res = response.data; //レスポンスデータ
-
-            //変数へ格納
-            this.YearAllSalary = res;
-
-            //データ件数が0件か確認
-            if (this.YearAllSalary.length === 0) {
-                this.nullDataShow = true;
-            }
-        });
+        this.initListData();
     },
 
     props: ['showing'],
