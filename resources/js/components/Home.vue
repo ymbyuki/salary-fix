@@ -6,7 +6,7 @@ child-component：HomeOverview|HomeList
 
 <template>
   <div>
-    <HomeOverview></HomeOverview>
+    <HomeOverview ref="homeOverview"></HomeOverview>
     <HomeList @showAlert="showAlert"></HomeList>
     <transition name="fade">
       <v-alert :type="alertType" id="alert" v-show="showAlertFlg">{{ alertMessage }}</v-alert>
@@ -54,6 +54,8 @@ export default {
         // メッセージを表示
         this.showAlertFlg = true;
 
+        // homeOverviewを更新
+        this.$refs.homeOverview.initPage()
         //3秒後に削除
         setTimeout(function () {
           this.showAlertFlg = false;

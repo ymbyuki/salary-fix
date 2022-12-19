@@ -5378,6 +5378,8 @@ __webpack_require__.r(__webpack_exports__);
         // メッセージを表示
         this.showAlertFlg = true;
 
+        // homeOverviewを更新
+        this.$refs.homeOverview.initPage();
         //3秒後に削除
         setTimeout(function () {
           this.showAlertFlg = false;
@@ -5892,7 +5894,9 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("HomeOverview"), _vm._v(" "), _c("HomeList", {
+  return _c("div", [_c("HomeOverview", {
+    ref: "homeOverview"
+  }), _vm._v(" "), _c("HomeList", {
     on: {
       showAlert: _vm.showAlert
     }
