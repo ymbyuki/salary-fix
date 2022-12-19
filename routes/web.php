@@ -10,11 +10,18 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| 認証前ルーティング
+| ライブラリルーティング
 |--------------------------------------------------------------------------
 */
 
 Auth::routes(); // 認証用
+
+/*
+|--------------------------------------------------------------------------
+| 認証前ルーティング
+| ここには認証をしなくても入れるページを入力
+|--------------------------------------------------------------------------
+*/
 Route::get('/', function () {
   return view('welcome');
 }); //TOPページ
@@ -32,23 +39,20 @@ Route::group(['middleware' => 'auth'], function () {
   */
   Route::prefix('api')->group(function () {
     /* CREATE */
-    Route::post('/store', [App\Http\Controllers\SalaryApiController::class, 'store']); //本年度の全てのデータ取得
-
+    Route::post('/store', [App\Http\Controllers\SalaryApiController::class, 'store']); //データの新規作成
     /* READ */
-    Route::post('/initIndexPage', [App\Http\Controllers\SalaryApiController::class, 'initIndexPage']); //本年度の全てのデータ取得
+    Route::post('/initIndexPage', [App\Http\Controllers\SalaryApiController::class, 'initIndexPage']); //ページ初期化
     Route::post('/getYearAllSalary', [App\Http\Controllers\SalaryApiController::class, 'getYearAllSalary']); //本年度の全てのデータ取得
-    Route::get('/getThisMonthSalary', [App\Http\Controllers\SalaryApiController::class, 'getThisMonthSalary']); //今月の全データ
+    // Route::get('/getThisMonthSalary', [App\Http\Controllers\SalaryApiController::class, 'getThisMonthSalary']); //今月の全データ
     Route::post('/getSalary', [App\Http\Controllers\SalaryApiController::class, 'getSalary']); //個別詳細
-    Route::get('/totalCost', [App\Http\Controllers\SalaryApiController::class, 'totalCost']); //今年の合計
-    Route::get('/totalThisMonthCost', [App\Http\Controllers\SalaryApiController::class, 'totalThisMonthCost']); //今年の合計
     Route::get('/getAllSalary', [App\Http\Controllers\SalaryApiController::class, 'getAllSalary']); //全データ取得
     Route::post('/selectBankList', [App\Http\Controllers\SalaryApiController::class, 'selectBankList']); //全データ取得
 
     /* UPDATE */
-    Route::post('/update', [App\Http\Controllers\SalaryApiController::class, 'update']); //本年度の全てのデータ取得
+    Route::post('/update', [App\Http\Controllers\SalaryApiController::class, 'update']); //データのアップデート
 
     /* DELETE */
-    Route::post('/delete', [App\Http\Controllers\SalaryApiController::class, 'delete']); //本年度の全てのデータ取得
+    Route::post('/delete', [App\Http\Controllers\SalaryApiController::class, 'delete']); //データの削除
 
   });
   /*

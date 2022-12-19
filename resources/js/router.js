@@ -6,7 +6,9 @@ import New from './components/New.vue'
 
 const routes = [{
         path: '/home',
-        component: Home
+        name: 'home',
+        component: Home,
+        props: true
     },
     {
         path: '/new',

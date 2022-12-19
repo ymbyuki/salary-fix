@@ -6,14 +6,16 @@ child-component：NULL
 
 <template>
     <v-app>
-        <v-app-bar app prop>
+        <v-app-bar app prop class="list-none">
             <v-app-bar-nav-icon class="d-flex d-sm-none"></v-app-bar-nav-icon>
             <v-toolbar-title>
-                <router-link to="/home">Salary</router-link>
+                <router-link to="/home" >
+                    <img class="block h-9 w-auto" src="../../../public/img/logo.svg" alt="">
+                </router-link>
             </v-toolbar-title>
             <v-spacer></v-spacer>
             <li>
-                <router-link to="/home">Home</router-link>
+                <router-link to="/home" class="mr-4">Home</router-link>
             </li>
             <li>
                 <router-link to="/new">新規登録</router-link>
@@ -27,8 +29,8 @@ child-component：NULL
                 </template>
 
                 <v-list>
-                    <v-list-item>
-                        <v-list-item-title @click="logout()">ログアウト</v-list-item-title>
+                    <v-list-item link>
+                        <v-list-item-title @click="logout()" >ログアウト</v-list-item-title>
                     </v-list-item>
                 </v-list>
             </v-menu>

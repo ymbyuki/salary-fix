@@ -144,7 +144,38 @@ class Salary extends Model
     public function selectBankList()
     {
         $auth = auth()->user()->id;
-        $bankList = Salary::select('bank')->where('user_id', $auth)->groupBy('bank')->get();
+        $bankList = Salary::select('bank')->where('deleted_at', null)->where('user_id', $auth)->groupBy('bank')->get();
         return $bankList;
+    }
+
+    /**
+     * 新規追加
+     */
+    public function store($item)
+    {
+        $data = $item;
+        $validatedData = $data->validate([
+            'money' => 'required|numeric',
+        ]);
+        try {
+            $item = new \App\Models\Salary;
+            $item->user_id = Auth()->id();
+            $item->bank = $data->bank;
+            $item->date = $data->date;
+            $item->workplace = $data->workplace;
+            $item->money = $data->money;
+            $item->save();
+            $respons = [
+                'status' => 'true',
+                'content' => $item,
+            ];
+        } catch (\Throwable $th) {
+            $respons = [
+                'status' => 'false',
+                'content' => '',
+            ];
+        } finally {
+            return (json_encode($respons));
+        }
     }
 }

@@ -5342,6 +5342,49 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     HomeOverview: _HomeOverview_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     HomeList: _HomeList_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      alertMessage: '',
+      //アラートメッセージ
+      alertType: 'success',
+      //アラート内容
+      showAlertFlg: false //アラートを表示するかどうか
+    };
+  },
+
+  props: ['message'],
+  methods: {
+    toggleMessage: function toggleMessage() {
+      if (this.message) {
+        var resdate = this.message;
+        this.alertMessage = resdate.message;
+        if (!resdate.status) {
+          this.alertType = 'error';
+        }
+        this.showAlertFlg = true;
+
+        //3秒後に削除
+        setTimeout(function () {
+          this.showAlertFlg = false;
+        }.bind(this), 3000);
+      }
+    },
+    showAlert: function showAlert(resdate) {
+      this.alertMessage = resdate.message;
+      if (!resdate.status) {
+        this.alertType = 'error';
+      }
+      this.showAlertFlg = true;
+
+      //3秒後に削除
+      setTimeout(function () {
+        this.showAlertFlg = false;
+      }.bind(this), 3000);
+    }
+  },
+  mounted: function mounted() {
+    this.toggleMessage();
   }
 });
 
@@ -5411,19 +5454,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     //アラートを表示
     showAlert: function showAlert(resdate) {
+      //リストの初期化
       if (resdate.status) {
         this.initListData();
       }
-      this.alertMessage = resdate.message;
-      if (!resdate.status) {
-        this.alertType = 'error';
-      }
-      this.showAlertFlg = true;
-
-      //3秒後に削除
-      setTimeout(function () {
-        this.showAlertFlg = false;
-      }.bind(this), 3000);
+      this.$emit('showAlert', resdate); //親コンポーネントのメーセージ表示
     }
   },
   mounted: function mounted() {
@@ -5527,7 +5562,69 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      date: '',
+      bank: '',
+      workplace: '',
+      money: '',
+      bankList: []
+    };
+  },
+  methods: {
+    insertData: function insertData() {
+      var _this = this;
+      var sendData = {
+        bank: this.bank,
+        workplace: this.workplace,
+        date: this.date,
+        money: this.money
+      };
+      axios.post("/api/store", sendData).then(function (response) {
+        var res = response.data; //レスポンスデータ
+        console.log(response.data);
+        if (res.status === 'true') {
+          return {
+            status: true,
+            message: "データが送信されました"
+          };
+        } else {
+          return {
+            status: false,
+            message: "データが送信できませんでした"
+          };
+        }
+      }).then(function (result) {
+        _this.$router.push({
+          name: 'home',
+          params: {
+            message: result
+          }
+        });
+      });
+    },
+    showBankList: function showBankList() {
+      var _this2 = this;
+      axios.post("/api/selectBankList").then(function (response) {
+        var res = response.data; //レスポンスデータ
+        _this2.bankList = res;
+      });
+    },
+    selectBank: function selectBank(bankName) {
+      this.bank = bankName;
+    }
+  },
+  mounted: function mounted() {
+    var today = new Date();
+    today.setDate(today.getDate());
+    var yyyy = today.getFullYear();
+    var mm = ("0" + (today.getMonth() + 1)).slice(-2);
+    var dd = ("0" + today.getDate()).slice(-2);
+    var todayData = yyyy + '-' + mm + '-' + dd;
+    this.date = todayData;
+  }
+});
 
 /***/ }),
 
@@ -5692,6 +5789,7 @@ var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
   return _c("v-app", [_c("v-app-bar", {
+    staticClass: "list-none",
     attrs: {
       app: "",
       prop: ""
@@ -5702,7 +5800,14 @@ var render = function render() {
     attrs: {
       to: "/home"
     }
-  }, [_vm._v("Salary")])], 1), _vm._v(" "), _c("v-spacer"), _vm._v(" "), _c("li", [_c("router-link", {
+  }, [_c("img", {
+    staticClass: "block h-9 w-auto",
+    attrs: {
+      src: __webpack_require__(/*! ../../../public/img/logo.svg */ "./public/img/logo.svg"),
+      alt: ""
+    }
+  })])], 1), _vm._v(" "), _c("v-spacer"), _vm._v(" "), _c("li", [_c("router-link", {
+    staticClass: "mr-4",
     attrs: {
       to: "/home"
     }
@@ -5728,7 +5833,11 @@ var render = function render() {
         }, "v-btn", attrs, false), on), [_c("v-icon", [_vm._v("mdi-dots-vertical")])], 1)];
       }
     }])
-  }, [_vm._v(" "), _c("v-list", [_c("v-list-item", [_c("v-list-item-title", {
+  }, [_vm._v(" "), _c("v-list", [_c("v-list-item", {
+    attrs: {
+      link: ""
+    }
+  }, [_c("v-list-item-title", {
     on: {
       click: function click($event) {
         return _vm.logout();
@@ -5769,7 +5878,26 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_c("HomeOverview"), _vm._v(" "), _c("HomeList")], 1);
+  return _c("div", [_c("HomeOverview"), _vm._v(" "), _c("HomeList", {
+    on: {
+      showAlert: _vm.showAlert
+    }
+  }), _vm._v(" "), _c("transition", {
+    attrs: {
+      name: "fade"
+    }
+  }, [_c("v-alert", {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: _vm.showAlertFlg,
+      expression: "showAlertFlg"
+    }],
+    attrs: {
+      type: _vm.alertType,
+      id: "alert"
+    }
+  }, [_vm._v(_vm._s(_vm.alertMessage))])], 1)], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -5832,22 +5960,7 @@ var render = function render() {
       toggleModal: _vm.toggleModal,
       showAlert: _vm.showAlert
     }
-  }), _vm._v(" "), _c("transition", {
-    attrs: {
-      name: "fade"
-    }
-  }, [_c("v-alert", {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: _vm.showAlertFlg,
-      expression: "showAlertFlg"
-    }],
-    attrs: {
-      type: _vm.alertType,
-      id: "alert"
-    }
-  }, [_vm._v(_vm._s(_vm.alertMessage))])], 1)], 1);
+  })], 1);
 };
 var staticRenderFns = [function () {
   var _vm = this,
@@ -5973,7 +6086,129 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div");
+  return _c("div", {
+    staticClass: "pt-5"
+  }, [_c("v-row", {
+    attrs: {
+      justify: "center"
+    }
+  }, [_c("v-card", [_c("v-card-title", [_vm._v("新規登録")]), _vm._v(" "), _c("v-form", [_c("v-card-text", [_c("v-text-field", {
+    attrs: {
+      label: "日付",
+      "hide-details": "auto",
+      type: "date"
+    },
+    model: {
+      value: _vm.date,
+      callback: function callback($$v) {
+        _vm.date = $$v;
+      },
+      expression: "date"
+    }
+  }), _vm._v(" "), _c("v-text-field", {
+    attrs: {
+      label: "会社名",
+      "hide-details": "auto"
+    },
+    model: {
+      value: _vm.workplace,
+      callback: function callback($$v) {
+        _vm.workplace = $$v;
+      },
+      expression: "workplace"
+    }
+  }), _vm._v(" "), _c("v-row", {
+    staticClass: "align-center my-1"
+  }, [_c("v-col", {
+    attrs: {
+      cols: "12",
+      md: "8"
+    }
+  }, [_c("v-text-field", {
+    attrs: {
+      label: "銀行名",
+      "hide-details": "auto"
+    },
+    model: {
+      value: _vm.bank,
+      callback: function callback($$v) {
+        _vm.bank = $$v;
+      },
+      expression: "bank"
+    }
+  })], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      md: "4"
+    }
+  }, [_c("v-row", {
+    attrs: {
+      justify: "space-around"
+    }
+  }, [_c("v-menu", {
+    attrs: {
+      "offset-y": ""
+    },
+    scopedSlots: _vm._u([{
+      key: "activator",
+      fn: function fn(_ref) {
+        var attrs = _ref.attrs,
+          on = _ref.on;
+        return [_c("v-btn", _vm._g(_vm._b({
+          attrs: {
+            outlined: "",
+            color: "indigo"
+          },
+          on: {
+            click: function click($event) {
+              return _vm.showBankList();
+            }
+          }
+        }, "v-btn", attrs, false), on), [_vm._v("\n                                            登録済み銀行\n                                        ")])];
+      }
+    }])
+  }, [_vm._v(" "), _c("v-list", _vm._l(_vm.bankList, function (item) {
+    return _c("v-list-item", {
+      key: item.bank,
+      attrs: {
+        link: ""
+      },
+      on: {
+        click: function click($event) {
+          return _vm.selectBank(item.bank);
+        }
+      }
+    }, [_c("v-list-item-title", {
+      domProps: {
+        textContent: _vm._s(item.bank)
+      }
+    })], 1);
+  }), 1)], 1)], 1)], 1)], 1), _vm._v(" "), _c("v-text-field", {
+    attrs: {
+      label: "金額",
+      "hide-details": "auto",
+      suffix: "円"
+    },
+    model: {
+      value: _vm.money,
+      callback: function callback($$v) {
+        _vm.money = $$v;
+      },
+      expression: "money"
+    }
+  })], 1), _vm._v(" "), _c("v-card-text", {
+    staticClass: "d-flex justify-end"
+  }, [_c("v-btn", {
+    staticClass: "mr-2",
+    attrs: {
+      color: "primary"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.insertData();
+      }
+    }
+  }, [_vm._v("登録")])], 1)], 1)], 1)], 1)], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -6332,7 +6567,9 @@ __webpack_require__.r(__webpack_exports__);
 
 var routes = [{
   path: '/home',
-  component: _components_Home_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  name: 'home',
+  component: _components_Home_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+  props: true
 }, {
   path: '/new',
   component: _components_New_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
@@ -11821,6 +12058,16 @@ module.exports = function (url, options) {
 
   return url;
 };
+
+/***/ }),
+
+/***/ "./public/img/logo.svg":
+/*!*****************************!*\
+  !*** ./public/img/logo.svg ***!
+  \*****************************/
+/***/ ((module) => {
+
+module.exports = "/images/logo.svg?391214c830145f17b2d5373fec559a27";
 
 /***/ }),
 

@@ -119,4 +119,12 @@ class SalaryApiController extends Controller
         $data = $this->salary->deleteitem($request);
         return $data;
     }
+
+    /**
+     * 新規追加
+     */
+    public function store(Request $request) {
+        $data = $this->salary->store($request);
+        return $data;
+    }
 }

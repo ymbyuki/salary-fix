@@ -24,11 +24,6 @@ child-component：modal
         </div>
         <p class="p-3 text-center bg-white shadow" v-show="nullDataShow">データがありません</p>
         <modal :itemResData="itemResData" :dialog="dialog" @toggleModal="toggleModal" @showAlert="showAlert" />
-
-        <transition name="fade">
-            <v-alert :type="alertType" id="alert" v-show="showAlertFlg">{{ alertMessage }}</v-alert>
-        </transition>
-
     </div>
 </template>
 
@@ -87,19 +82,11 @@ export default {
 
         //アラートを表示
         showAlert: function (resdate) {
+            //リストの初期化
             if (resdate.status) {
                 this.initListData();
             }
-            this.alertMessage = resdate.message;
-            if (!resdate.status) {
-                this.alertType = 'error';
-            }
-            this.showAlertFlg = true;
-
-            //3秒後に削除
-            setTimeout(function () {
-                this.showAlertFlg = false;
-            }.bind(this), 3000)
+            this.$emit('showAlert', resdate); //親コンポーネントのメーセージ表示
         },
 
     },
