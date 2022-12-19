@@ -1,3 +1,8 @@
+<!--
+Component Content：新規作成
+parent-component：none
+child-component：none
+-->
 <template>
     <div class="pt-5">
         <v-row justify="center">
@@ -98,7 +103,7 @@ export default {
             this.bank = bankName;
         }
     },
-    
+
     mounted: function () {
         // 今日の日付をdataに設定
         var today = new Date();

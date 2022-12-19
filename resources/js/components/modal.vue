@@ -1,7 +1,7 @@
 <!--
 Component Content：モーダル用
-parent-component：
-child-component：
+parent-component：HomeList
+child-component：None
 -->
 
 <template>
