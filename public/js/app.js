@@ -5355,13 +5355,27 @@ __webpack_require__.r(__webpack_exports__);
 
   props: ['message'],
   methods: {
-    toggleMessage: function toggleMessage() {
-      if (this.message) {
-        var resdate = this.message;
-        this.alertMessage = resdate.message;
-        if (!resdate.status) {
+    showAlert: function showAlert() {
+      var resdate = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+      if (this.message !== undefined || resdate !== '') {
+        var resultData = "";
+        // ルーティングでpushされてきた場合
+        if (resdate === '') {
+          resultData = this.message;
+        } else {
+          // emitで起動した場合
+          resultData = resdate;
+        }
+
+        // ステータスがfalseの場合
+        if (!resultData.status) {
           this.alertType = 'error';
         }
+
+        //メッセージを設定
+        this.alertMessage = resultData.message;
+
+        // メッセージを表示
         this.showAlertFlg = true;
 
         //3秒後に削除
@@ -5369,22 +5383,10 @@ __webpack_require__.r(__webpack_exports__);
           this.showAlertFlg = false;
         }.bind(this), 3000);
       }
-    },
-    showAlert: function showAlert(resdate) {
-      this.alertMessage = resdate.message;
-      if (!resdate.status) {
-        this.alertType = 'error';
-      }
-      this.showAlertFlg = true;
-
-      //3秒後に削除
-      setTimeout(function () {
-        this.showAlertFlg = false;
-      }.bind(this), 3000);
     }
   },
   mounted: function mounted() {
-    this.toggleMessage();
+    this.showAlert();
   }
 });
 
@@ -5566,24 +5568,32 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       date: '',
+      //日付
       bank: '',
+      //銀行名
       workplace: '',
+      //社名
       money: '',
-      bankList: []
+      //金額
+      bankList: [] //銀行のリスト
     };
   },
+
   methods: {
+    // データを送信
     insertData: function insertData() {
       var _this = this;
+      // データを作成
       var sendData = {
         bank: this.bank,
         workplace: this.workplace,
         date: this.date,
         money: this.money
       };
+
+      // データを送信
       axios.post("/api/store", sendData).then(function (response) {
         var res = response.data; //レスポンスデータ
-        console.log(response.data);
         if (res.status === 'true') {
           return {
             status: true,
@@ -5596,6 +5606,7 @@ __webpack_require__.r(__webpack_exports__);
           };
         }
       }).then(function (result) {
+        // ホームに戻る
         _this.$router.push({
           name: 'home',
           params: {
@@ -5604,6 +5615,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     },
+    // 銀行のリスト作成
     showBankList: function showBankList() {
       var _this2 = this;
       axios.post("/api/selectBankList").then(function (response) {
@@ -5611,11 +5623,13 @@ __webpack_require__.r(__webpack_exports__);
         _this2.bankList = res;
       });
     },
+    // 銀行を設定
     selectBank: function selectBank(bankName) {
       this.bank = bankName;
     }
   },
   mounted: function mounted() {
+    // 今日の日付をdataに設定
     var today = new Date();
     today.setDate(today.getDate());
     var yyyy = today.getFullYear();

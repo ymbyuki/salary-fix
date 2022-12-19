@@ -47,15 +47,17 @@
 export default {
     data() {
         return {
-            date: '',
-            bank: '',
-            workplace: '',
-            money: '',
-            bankList: [],
+            date: '', //日付
+            bank: '', //銀行名
+            workplace: '', //社名
+            money: '', //金額
+            bankList: [], //銀行のリスト
         }
     },
     methods: {
+        // データを送信
         insertData: function () {
+            // データを作成
             const sendData = {
                 bank: this.bank,
                 workplace: this.workplace,
@@ -63,9 +65,9 @@ export default {
                 money: this.money,
             }
 
+            // データを送信
             axios.post("/api/store", sendData).then((response) => {
                 const res = response.data; //レスポンスデータ
-                console.log(response.data)
                 if (res.status === 'true') {
                     return ({
                         status: true,
@@ -78,21 +80,27 @@ export default {
                     });
                 }
             }).then((result) => {
+                // ホームに戻る
                 this.$router.push({ name: 'home', params: { message: result } });
             });
 
         },
+        // 銀行のリスト作成
         showBankList: function () {
             axios.post("/api/selectBankList").then((response) => {
                 const res = response.data; //レスポンスデータ
                 this.bankList = res;
             })
         },
+
+        // 銀行を設定
         selectBank: function (bankName) {
             this.bank = bankName;
         }
     },
+    
     mounted: function () {
+        // 今日の日付をdataに設定
         var today = new Date();
         today.setDate(today.getDate());
         var yyyy = today.getFullYear();

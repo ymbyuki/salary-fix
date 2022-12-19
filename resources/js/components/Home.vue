@@ -32,13 +32,26 @@ export default {
   },
   props: ['message'],
   methods: {
-    toggleMessage: function () {
-      if (this.message) {
-        let resdate = this.message;
-        this.alertMessage = resdate.message;
-        if (!resdate.status) {
+    showAlert: function (resdate = '') {
+      if (this.message !== undefined || resdate !== '') {
+        let resultData = "";
+        // ルーティングでpushされてきた場合
+        if (resdate === '') {
+          resultData = this.message;
+        } else {
+          // emitで起動した場合
+          resultData = resdate;
+        }
+
+        // ステータスがfalseの場合
+        if (!resultData.status) {
           this.alertType = 'error';
         }
+
+        //メッセージを設定
+        this.alertMessage = resultData.message;
+
+        // メッセージを表示
         this.showAlertFlg = true;
 
         //3秒後に削除
@@ -47,22 +60,9 @@ export default {
         }.bind(this), 3000)
       }
     },
-    showAlert: function (resdate) {
-      this.alertMessage = resdate.message;
-      if (!resdate.status) {
-        this.alertType = 'error';
-      }
-      this.showAlertFlg = true;
-
-      //3秒後に削除
-      setTimeout(function () {
-        this.showAlertFlg = false;
-      }.bind(this), 3000)
-    },
-
   },
   mounted: function () {
-    this.toggleMessage();
+    this.showAlert();
   }
 }
 </script>
