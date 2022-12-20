@@ -11,12 +11,38 @@ child-component：none
                 <v-form>
                     <v-card-text>
                         <v-text-field v-model="date" label="日付" hide-details="auto" type="date"></v-text-field>
-                        <v-text-field v-model="workplace" label="会社名" hide-details="auto"></v-text-field>
+                        <!-- <v-text-field v-model="workplace" label="会社名" hide-details="auto"></v-text-field> -->
+
+                        <v-row class="align-center my-1">
+                            <v-col cols="12" md="8">
+                                <v-text-field v-model="workplace" label="会社名" hide-details="auto"></v-text-field>
+                            </v-col>
+                            <v-col cols="12" md="4">
+                                <v-row justify="space-around">
+                                    <v-menu offset-y>
+                                        <template v-slot:activator="{ attrs, on }">
+                                            <v-btn class="" outlined color="indigo" v-bind="attrs" v-on="on"
+                                                @click="showworkplaceList()">
+                                                登録済み職場
+                                            </v-btn>
+                                        </template>
+
+                                        <v-list>
+                                            <v-list-item v-for="item in workplaceList" :key="item.workplace" link
+                                                @click="selectWorkplace(item.workplace)">
+                                                <v-list-item-title v-text="item.workplace"></v-list-item-title>
+                                            </v-list-item>
+                                        </v-list>
+                                    </v-menu>
+                                </v-row>
+                            </v-col>
+                        </v-row>
+
                         <v-row class="align-center my-1">
                             <v-col cols="12" md="8">
                                 <v-text-field v-model="bank" label="銀行名" hide-details="auto"></v-text-field>
                             </v-col>
-                            <v-col cols="12" md="4" >
+                            <v-col cols="12" md="4">
                                 <v-row justify="space-around">
                                     <v-menu offset-y>
                                         <template v-slot:activator="{ attrs, on }">
@@ -57,6 +83,8 @@ export default {
             workplace: '', //社名
             money: '', //金額
             bankList: [], //銀行のリスト
+            workplaceList: [], //職場のリスト
+
         }
     },
     methods: {
@@ -101,6 +129,19 @@ export default {
         // 銀行を設定
         selectBank: function (bankName) {
             this.bank = bankName;
+        },
+
+        // 銀行のリスト作成
+        showworkplaceList: function () {
+            axios.post("/api/selectWorkplacekList").then((response) => {
+                const res = response.data; //レスポンスデータ
+                this.workplaceList = res;
+            })
+        },
+
+        // 銀行を設定
+        selectWorkplace: function (workplaceName) {
+            this.workplace = workplaceName;
         }
     },
 

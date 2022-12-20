@@ -5577,7 +5577,9 @@ __webpack_require__.r(__webpack_exports__);
       //社名
       money: '',
       //金額
-      bankList: [] //銀行のリスト
+      bankList: [],
+      //銀行のリスト
+      workplaceList: [] //職場のリスト
     };
   },
 
@@ -5628,6 +5630,18 @@ __webpack_require__.r(__webpack_exports__);
     // 銀行を設定
     selectBank: function selectBank(bankName) {
       this.bank = bankName;
+    },
+    // 銀行のリスト作成
+    showworkplaceList: function showworkplaceList() {
+      var _this3 = this;
+      axios.post("/api/selectWorkplacekList").then(function (response) {
+        var res = response.data; //レスポンスデータ
+        _this3.workplaceList = res;
+      });
+    },
+    // 銀行を設定
+    selectWorkplace: function selectWorkplace(workplaceName) {
+      this.workplace = workplaceName;
     }
   },
   mounted: function mounted() {
@@ -6123,7 +6137,14 @@ var render = function render() {
       },
       expression: "date"
     }
-  }), _vm._v(" "), _c("v-text-field", {
+  }), _vm._v(" "), _c("v-row", {
+    staticClass: "align-center my-1"
+  }, [_c("v-col", {
+    attrs: {
+      cols: "12",
+      md: "8"
+    }
+  }, [_c("v-text-field", {
     attrs: {
       label: "会社名",
       "hide-details": "auto"
@@ -6135,7 +6156,54 @@ var render = function render() {
       },
       expression: "workplace"
     }
-  }), _vm._v(" "), _c("v-row", {
+  })], 1), _vm._v(" "), _c("v-col", {
+    attrs: {
+      cols: "12",
+      md: "4"
+    }
+  }, [_c("v-row", {
+    attrs: {
+      justify: "space-around"
+    }
+  }, [_c("v-menu", {
+    attrs: {
+      "offset-y": ""
+    },
+    scopedSlots: _vm._u([{
+      key: "activator",
+      fn: function fn(_ref) {
+        var attrs = _ref.attrs,
+          on = _ref.on;
+        return [_c("v-btn", _vm._g(_vm._b({
+          attrs: {
+            outlined: "",
+            color: "indigo"
+          },
+          on: {
+            click: function click($event) {
+              return _vm.showworkplaceList();
+            }
+          }
+        }, "v-btn", attrs, false), on), [_vm._v("\n                                            登録済み職場\n                                        ")])];
+      }
+    }])
+  }, [_vm._v(" "), _c("v-list", _vm._l(_vm.workplaceList, function (item) {
+    return _c("v-list-item", {
+      key: item.workplace,
+      attrs: {
+        link: ""
+      },
+      on: {
+        click: function click($event) {
+          return _vm.selectWorkplace(item.workplace);
+        }
+      }
+    }, [_c("v-list-item-title", {
+      domProps: {
+        textContent: _vm._s(item.workplace)
+      }
+    })], 1);
+  }), 1)], 1)], 1)], 1)], 1), _vm._v(" "), _c("v-row", {
     staticClass: "align-center my-1"
   }, [_c("v-col", {
     attrs: {
@@ -6169,9 +6237,9 @@ var render = function render() {
     },
     scopedSlots: _vm._u([{
       key: "activator",
-      fn: function fn(_ref) {
-        var attrs = _ref.attrs,
-          on = _ref.on;
+      fn: function fn(_ref2) {
+        var attrs = _ref2.attrs,
+          on = _ref2.on;
         return [_c("v-btn", _vm._g(_vm._b({
           attrs: {
             outlined: "",

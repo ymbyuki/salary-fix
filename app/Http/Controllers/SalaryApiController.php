@@ -101,6 +101,15 @@ class SalaryApiController extends Controller
         return $data;
     }
 
+    /**
+     * 会社名のリスト取得
+     */
+    public function selectWorkplacekList()
+    {
+        $data = $this->salary->selectWorkplacekList();
+        return $data;
+    }
+
 
     /**
      * 登録処理

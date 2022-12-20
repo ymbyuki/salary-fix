@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/getSalary', [App\Http\Controllers\SalaryApiController::class, 'getSalary']); //個別詳細
     Route::get('/getAllSalary', [App\Http\Controllers\SalaryApiController::class, 'getAllSalary']); //全データ取得
     Route::post('/selectBankList', [App\Http\Controllers\SalaryApiController::class, 'selectBankList']); //全データ取得
+    Route::post('/selectWorkplacekList', [App\Http\Controllers\SalaryApiController::class, 'selectWorkplacekList']); //全データ取得
 
     /* UPDATE */
     Route::post('/update', [App\Http\Controllers\SalaryApiController::class, 'update']); //データのアップデート

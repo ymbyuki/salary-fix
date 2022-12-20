@@ -148,6 +148,12 @@ class Salary extends Model
         return $bankList;
     }
 
+    public function selectWorkplacekList() {
+        $auth = auth()->user()->id;
+        $workplaceList = Salary::select('workplace')->where('deleted_at', null)->where('user_id', $auth)->groupBy('workplace')->get();
+        return $workplaceList;
+    }
+
     /**
      * 新規追加
      */
