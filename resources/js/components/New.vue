@@ -75,6 +75,8 @@ child-component：none
 </template>
 
 <script>
+import API from '../const';
+
 export default {
     data() {
         return {
@@ -99,7 +101,7 @@ export default {
             }
 
             // データを送信
-            axios.post("/api/store", sendData).then((response) => {
+            axios.post(API.API_URL.store, sendData).then((response) => {
                 const res = response.data; //レスポンスデータ
                 if (res.status === 'true') {
                     return ({

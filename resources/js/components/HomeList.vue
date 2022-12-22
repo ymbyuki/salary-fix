@@ -38,6 +38,7 @@ child-component：modal
 
 <script>
 import modal from './modal.vue'
+import API from '../const';
 
 export default {
     data() {
@@ -53,7 +54,7 @@ export default {
     },
     methods: {
         initListData: function () {
-            axios.post("/api/getYearAllSalary").then((response) => {
+            axios.post(API.API_URL.getYearAllSalary).then((response) => {
                 const res = response.data; //レスポンスデータ
 
                 //変数へ格納
@@ -67,7 +68,7 @@ export default {
         },
         //個別のデータを取得
         sendItem: function (num) {
-            axios.post("/api/getSalary", { id: num }).then((response) => {
+            axios.post(API.API_URL.getSalary, { id: num }).then((response) => {
                 const res = response.data; //レスポンスデータ
                 //変数へ格納
                 this.itemResData = res;

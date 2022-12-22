@@ -61,6 +61,7 @@ child-component：loading
 
 <script>
 import loading from './loading.vue';
+import API from '../const';
 
 export default {
     data() {
@@ -83,7 +84,7 @@ export default {
         initPage: function () {
 
             // initIndexPageの呼び出し
-            axios.post("/api/initIndexPage").then((response) => {
+            axios.post(API.API_URL.initIndexPage).then((response) => {
                 const res = response.data; //レスポンスデータ
 
                 //変数へ格納

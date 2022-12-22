@@ -23,7 +23,7 @@ Auth::routes(); // 認証用
 |--------------------------------------------------------------------------
 */
 Route::get('/', function () {
-  return view('welcome');
+  return view('firstPage');
 }); //TOPページ
 
 /*

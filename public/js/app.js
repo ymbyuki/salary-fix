@@ -5406,6 +5406,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _modal_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./modal.vue */ "./resources/js/components/modal.vue");
+/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../const */ "./resources/js/const.js");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -5428,7 +5430,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     initListData: function initListData() {
       var _this = this;
-      axios.post("/api/getYearAllSalary").then(function (response) {
+      axios.post(_const__WEBPACK_IMPORTED_MODULE_1__["default"].API_URL.getYearAllSalary).then(function (response) {
         var res = response.data; //レスポンスデータ
 
         //変数へ格納
@@ -5443,7 +5445,7 @@ __webpack_require__.r(__webpack_exports__);
     //個別のデータを取得
     sendItem: function sendItem(num) {
       var _this2 = this;
-      axios.post("/api/getSalary", {
+      axios.post(_const__WEBPACK_IMPORTED_MODULE_1__["default"].API_URL.getSalary, {
         id: num
       }).then(function (response) {
         var res = response.data; //レスポンスデータ
@@ -5489,6 +5491,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _loading_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./loading.vue */ "./resources/js/components/loading.vue");
+/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../const */ "./resources/js/const.js");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -5518,7 +5522,7 @@ __webpack_require__.r(__webpack_exports__);
     initPage: function initPage() {
       var _this = this;
       // initIndexPageの呼び出し
-      axios.post("/api/initIndexPage").then(function (response) {
+      axios.post(_const__WEBPACK_IMPORTED_MODULE_1__["default"].API_URL.initIndexPage).then(function (response) {
         var res = response.data; //レスポンスデータ
 
         //変数へ格納
@@ -5566,6 +5570,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../const */ "./resources/js/const.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5596,7 +5602,7 @@ __webpack_require__.r(__webpack_exports__);
       };
 
       // データを送信
-      axios.post("/api/store", sendData).then(function (response) {
+      axios.post(_const__WEBPACK_IMPORTED_MODULE_0__["default"].API_URL.store, sendData).then(function (response) {
         var res = response.data; //レスポンスデータ
         if (res.status === 'true') {
           return {
@@ -5686,6 +5692,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _const__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../const */ "./resources/js/const.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5739,7 +5747,7 @@ __webpack_require__.r(__webpack_exports__);
         money: this.money,
         id: this.id
       };
-      axios.post("/api/update", sendUpdateData).then(function (response) {
+      axios.post(_const__WEBPACK_IMPORTED_MODULE_0__["default"].API_URL.update, sendUpdateData).then(function (response) {
         var res = response.data; //レスポンスデータ
 
         if (res.status === 'true') {
@@ -5764,7 +5772,7 @@ __webpack_require__.r(__webpack_exports__);
       var sendDelete = {
         id: this.id
       };
-      axios.post("/api/delete", sendDelete).then(function (response) {
+      axios.post(_const__WEBPACK_IMPORTED_MODULE_0__["default"].API_URL["delete"], sendDelete).then(function (response) {
         var res = response.data; //レスポンスデータ
         if (res.status === 'true') {
           return {
@@ -6590,6 +6598,23 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_4__["default"]({
     "app-component": _components_AppComponent__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 });
+var startPos = 0,
+  winScrollTop = 0;
+// scrollイベントを設定
+window.addEventListener('scroll', function () {
+  winScrollTop = this.scrollY;
+  if (winScrollTop >= startPos) {
+    // 下にスクロールされた時
+    if (winScrollTop >= 200) {
+      // 下に200pxスクロールされたら隠す
+      document.getElementById('scrollArea').classList.add('hide');
+    }
+  } else {
+    // 上にスクロールされた時
+    document.getElementById('scrollArea').classList.remove('hide');
+  }
+  startPos = winScrollTop;
+});
 
 /***/ }),
 
@@ -6629,6 +6654,33 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/const.js":
+/*!*******************************!*\
+  !*** ./resources/js/const.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  /**
+   * API_URL リスト
+   */
+  API_URL: {
+    getYearAllSalary: '/api/getYearAllSalary',
+    getSalary: '/api/getSalary',
+    update: '/api/update',
+    "delete": '/api/delete',
+    store: '/api/store',
+    initIndexPage: '/api/initIndexPage'
+  }
+});
 
 /***/ }),
 

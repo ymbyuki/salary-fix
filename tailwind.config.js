@@ -8,7 +8,16 @@ module.exports = {
     ],
     darkMode: false, // or 'media' or 'class'
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                pantone: {
+                    orange: '#D3927E',
+                    blue: '#6869AC',
+                    green: '#85A195',
+                    red: '#8A4B5E',
+                }
+            },
+        },
     },
     variants: {
         extend: {},

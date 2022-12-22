@@ -58,6 +58,8 @@ child-component：None
 </template>
 
 <script>
+import API from '../const';
+
 export default {
     data() {
         return {
@@ -109,7 +111,7 @@ export default {
                 id: this.id
             }
 
-            axios.post("/api/update", sendUpdateData).then((response) => {
+            axios.post(API.API_URL.update, sendUpdateData).then((response) => {
                 const res = response.data; //レスポンスデータ
 
                 if (res.status === 'true') {
@@ -133,7 +135,7 @@ export default {
             const sendDelete = {
                 id: this.id
             };
-            axios.post("/api/delete", sendDelete).then((response) => {
+            axios.post(API.API_URL.delete, sendDelete).then((response) => {
                 const res = response.data; //レスポンスデータ
                 if (res.status === 'true') {
                     return ({
