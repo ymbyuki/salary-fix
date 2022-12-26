@@ -5891,9 +5891,20 @@ var render = function render() {
     staticClass: "pb-8 sm:px-16 px-8 min-h-screen"
   })], 1)], 1), _vm._v(" "), _c("v-footer", {
     attrs: {
-      app: ""
+      color: "primary lighten-1",
+      padless: ""
     }
-  })], 1);
+  }, [_c("v-row", {
+    attrs: {
+      justify: "center",
+      "no-gutters": ""
+    }
+  }, [_c("v-col", {
+    staticClass: "primary lighten-2 py-4 text-center white--text",
+    attrs: {
+      cols: "12"
+    }
+  }, [_vm._v("\n                " + _vm._s(new Date().getFullYear()) + " — "), _c("strong", [_vm._v("Salary produced by MuTech.")])])], 1)], 1)], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;
@@ -6711,6 +6722,12 @@ var routes = [{
 }, {
   path: '/new',
   component: _components_New_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+}, {
+  /**
+   * 指定外のURLを入力した際にhomeにリダイレクトする処理
+   */
+  path: '/*',
+  redirect: 'home'
 }];
 vue__WEBPACK_IMPORTED_MODULE_2__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]({

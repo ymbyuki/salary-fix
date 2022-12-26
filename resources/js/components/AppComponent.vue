@@ -9,7 +9,7 @@ child-component：NULL
         <v-app-bar app prop class="list-none">
             <v-app-bar-nav-icon class="d-flex d-sm-none"></v-app-bar-nav-icon>
             <v-toolbar-title>
-                <router-link to="/home" >
+                <router-link to="/home">
                     <img class="block h-9 w-auto" src="../../../public/img/logo.svg" alt="">
                 </router-link>
             </v-toolbar-title>
@@ -30,7 +30,7 @@ child-component：NULL
 
                 <v-list>
                     <v-list-item link>
-                        <v-list-item-title @click="logout()" >ログアウト</v-list-item-title>
+                        <v-list-item-title @click="logout()">ログアウト</v-list-item-title>
                     </v-list-item>
                 </v-list>
             </v-menu>
@@ -44,8 +44,12 @@ child-component：NULL
             </v-container>
         </v-main>
 
-        <v-footer app>
-            <!-- -->
+        <v-footer color="primary lighten-1" padless>
+            <v-row justify="center" no-gutters>
+                <v-col class="primary lighten-2 py-4 text-center white--text" cols="12">
+                    {{ new Date().getFullYear() }} — <strong>Salary produced by MuTech.</strong>
+                </v-col>
+            </v-row>
         </v-footer>
     </v-app>
 </template>

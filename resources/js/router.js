@@ -13,6 +13,13 @@ const routes = [{
     {
         path: '/new',
         component: New
+    },
+    {
+        /**
+         * 指定外のURLを入力した際にhomeにリダイレクトする処理
+         */
+        path: '/*',
+        redirect: 'home'
     }
 
 ]
