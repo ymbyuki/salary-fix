@@ -80,6 +80,7 @@
             transition: .5s;
         }
     </style>
+<script src="{{ mix('js/indexMain.js') }}"></script>
 </body>
 
 </html>
