@@ -11,17 +11,17 @@ child-component：None
                 <v-card>
                     <v-card-title>{{ title }}</v-card-title>
                     <v-card-subtitle>{{ subTitle }}</v-card-subtitle>
-                    <v-form>
+                    <v-form ref="newForm">
                         <v-card-text>
-                            <v-text-field v-model="date" label="日付" :rules="rules" hide-details="auto"
+                            <v-text-field v-model="date" label="日付" :rules="rules.required" hide-details="auto"
                                 :readonly="!update" type="date"></v-text-field>
-                            <v-text-field v-model="workplace" label="会社名" :rules="rules" hide-details="auto"
+                            <v-text-field v-model="workplace" label="会社名" :rules="rules.required" hide-details="auto"
                                 :readonly="!update">
                             </v-text-field>
-                            <v-text-field v-model="bank" label="銀行名" :rules="rules" hide-details="auto"
+                            <v-text-field v-model="bank" label="銀行名" :rules="rules.required" hide-details="auto"
                                 :readonly="!update">
                             </v-text-field>
-                            <v-text-field v-model="money" label="金額" :rules="rules" hide-details="auto"
+                            <v-text-field v-model="money" label="金額" :rules="rules.numberVal" hide-details="auto"
                                 :readonly="!update" suffix="円">
                             </v-text-field>
                         </v-card-text>
@@ -67,10 +67,15 @@ export default {
             title: '確認', //モーダルタイトル
             subTitle: '', //モーダルサブタイトル
             update: false, //更新フラグ
-            rules: [
-                value => !!value || 'Required.',
-                value => (value && value.length >= 3) || 'Min 3 characters',
-            ],
+            rules: {
+                required: [
+                    v => !!v || '必須項目です',
+                ],
+                numberVal: [
+                    v => !!v || '必須項目です',
+                    v => !!/^[0-9]+$/.test(v) || '半角数字で入力してください',
+                ]
+            },
             //リストからのデータ
             date: '',
             bank: '',
@@ -103,32 +108,35 @@ export default {
 
         //アップデートを送信
         sendUpdate: function () {
-            const sendUpdateData = {
-                bank: this.bank,
-                workplace: this.workplace,
-                date: this.date,
-                money: this.money,
-                id: this.id
-            }
-
-            axios.post(API.API_URL.update, sendUpdateData).then((response) => {
-                const res = response.data; //レスポンスデータ
-
-                if (res.status === 'true') {
-                    return ({
-                        status: true,
-                        message: "データが送信されました"
-                    });
-                } else {
-                    return ({
-                        status: false,
-                        message: "データが送信できませんでした"
-                    });
+            let validationFlag = this.$refs.newForm.validate();
+            if (validationFlag) {
+                const sendUpdateData = {
+                    bank: this.bank,
+                    workplace: this.workplace,
+                    date: this.date,
+                    money: this.money,
+                    id: this.id
                 }
-            }).then((result) => {
-                this.$emit('showAlert', result); //メッセージの表示
-                this.hideModal(); //モーダルの削除
-            });
+
+                axios.post(API.API_URL.update, sendUpdateData).then((response) => {
+                    const res = response.data; //レスポンスデータ
+
+                    if (res.status === 'true') {
+                        return ({
+                            status: true,
+                            message: "データが送信されました"
+                        });
+                    } else {
+                        return ({
+                            status: false,
+                            message: "データが送信できませんでした"
+                        });
+                    }
+                }).then((result) => {
+                    this.$emit('showAlert', result); //メッセージの表示
+                    this.hideModal(); //モーダルの削除
+                });
+            }
 
         },
         sendDelete: function () {

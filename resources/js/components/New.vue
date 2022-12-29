@@ -8,14 +8,15 @@ child-component：none
         <v-row justify="center">
             <v-card>
                 <v-card-title>新規登録</v-card-title>
-                <v-form>
+                <v-form ref="newForm">
                     <v-card-text>
-                        <v-text-field v-model="date" label="日付" hide-details="auto" type="date"></v-text-field>
-                        <!-- <v-text-field v-model="workplace" label="会社名" hide-details="auto"></v-text-field> -->
+                        <v-text-field v-model="date" label="日付" hide-details="auto" type="date"
+                            :rules="rules.required"></v-text-field>
 
                         <v-row class="align-center my-1">
                             <v-col cols="12" md="8">
-                                <v-text-field v-model="workplace" label="会社名" hide-details="auto"></v-text-field>
+                                <v-text-field v-model="workplace" label="会社名" hide-details="auto"
+                                    :rules="rules.required"></v-text-field>
                             </v-col>
                             <v-col cols="12" md="4">
                                 <v-row justify="space-around">
@@ -40,7 +41,8 @@ child-component：none
 
                         <v-row class="align-center my-1">
                             <v-col cols="12" md="8">
-                                <v-text-field v-model="bank" label="銀行名" hide-details="auto"></v-text-field>
+                                <v-text-field v-model="bank" label="銀行名" hide-details="auto"
+                                    :rules="rules.required"></v-text-field>
                             </v-col>
                             <v-col cols="12" md="4">
                                 <v-row justify="space-around">
@@ -62,7 +64,8 @@ child-component：none
                                 </v-row>
                             </v-col>
                         </v-row>
-                        <v-text-field v-model="money" label="金額" hide-details="auto" suffix="円"></v-text-field>
+                        <v-text-field v-model="money" label="金額" hide-details="auto" suffix="円"
+                            :rules="rules.numberVal"></v-text-field>
                     </v-card-text>
                     <v-card-text class="d-flex justify-end">
                         <v-btn class="mr-2" color="primary" @click="insertData()">登録</v-btn>
@@ -86,38 +89,48 @@ export default {
             money: '', //金額
             bankList: [], //銀行のリスト
             workplaceList: [], //職場のリスト
-
+            rules: {
+                required: [
+                    v => !!v || '必須項目です',
+                ],
+                numberVal: [
+                    v => !!v || '必須項目です',
+                    v => !!/^[0-9]+$/.test(v) || '半角数字で入力してください',
+                ]
+            },
         }
     },
     methods: {
         // データを送信
         insertData: function () {
-            // データを作成
-            const sendData = {
-                bank: this.bank,
-                workplace: this.workplace,
-                date: this.date,
-                money: this.money,
-            }
-
-            // データを送信
-            axios.post(API.API_URL.store, sendData).then((response) => {
-                const res = response.data; //レスポンスデータ
-                if (res.status === 'true') {
-                    return ({
-                        status: true,
-                        message: "データが送信されました"
-                    });
-                } else {
-                    return ({
-                        status: false,
-                        message: "データが送信できませんでした"
-                    });
+            let validationFlag = this.$refs.newForm.validate();
+            if (validationFlag) {
+                // データを作成
+                const sendData = {
+                    bank: this.bank,
+                    workplace: this.workplace,
+                    date: this.date,
+                    money: this.money,
                 }
-            }).then((result) => {
-                // ホームに戻る
-                this.$router.push({ name: 'home', params: { message: result } });
-            });
+                // データを送信
+                axios.post(API.API_URL.store, sendData).then((response) => {
+                    const res = response.data; //レスポンスデータ
+                    if (res.status === 'true') {
+                        return ({
+                            status: true,
+                            message: "データが送信されました"
+                        });
+                    } else {
+                        return ({
+                            status: false,
+                            message: "データが送信できませんでした"
+                        });
+                    }
+                }).then((result) => {
+                    // ホームに戻る
+                    this.$router.push({ name: 'home', params: { message: result } });
+                });
+            }
 
         },
         // 銀行のリスト作成

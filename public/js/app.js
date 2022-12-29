@@ -5585,45 +5585,57 @@ __webpack_require__.r(__webpack_exports__);
       //金額
       bankList: [],
       //銀行のリスト
-      workplaceList: [] //職場のリスト
+      workplaceList: [],
+      //職場のリスト
+      rules: {
+        required: [function (v) {
+          return !!v || '必須項目です';
+        }],
+        numberVal: [function (v) {
+          return !!v || '必須項目です';
+        }, function (v) {
+          return !!/^[0-9]+$/.test(v) || '半角数字で入力してください';
+        }]
+      }
     };
   },
-
   methods: {
     // データを送信
     insertData: function insertData() {
       var _this = this;
-      // データを作成
-      var sendData = {
-        bank: this.bank,
-        workplace: this.workplace,
-        date: this.date,
-        money: this.money
-      };
-
-      // データを送信
-      axios.post(_const__WEBPACK_IMPORTED_MODULE_0__["default"].API_URL.store, sendData).then(function (response) {
-        var res = response.data; //レスポンスデータ
-        if (res.status === 'true') {
-          return {
-            status: true,
-            message: "データが送信されました"
-          };
-        } else {
-          return {
-            status: false,
-            message: "データが送信できませんでした"
-          };
-        }
-      }).then(function (result) {
-        // ホームに戻る
-        _this.$router.push({
-          name: 'home',
-          params: {
-            message: result
+      var validationFlag = this.$refs.newForm.validate();
+      if (validationFlag) {
+        // データを作成
+        var sendData = {
+          bank: this.bank,
+          workplace: this.workplace,
+          date: this.date,
+          money: this.money
+        };
+        // データを送信
+        axios.post(_const__WEBPACK_IMPORTED_MODULE_0__["default"].API_URL.store, sendData).then(function (response) {
+          var res = response.data; //レスポンスデータ
+          if (res.status === 'true') {
+            return {
+              status: true,
+              message: "データが送信されました"
+            };
+          } else {
+            return {
+              status: false,
+              message: "データが送信できませんでした"
+            };
           }
+        }).then(function (result) {
+          // ホームに戻る
+          _this.$router.push({
+            name: 'home',
+            params: {
+              message: result
+            }
+          });
         });
-      });
+      }
     },
     // 銀行のリスト作成
     showBankList: function showBankList() {
@@ -5705,11 +5717,16 @@ __webpack_require__.r(__webpack_exports__);
       //モーダルサブタイトル
       update: false,
       //更新フラグ
-      rules: [function (value) {
-        return !!value || 'Required.';
-      }, function (value) {
-        return value && value.length >= 3 || 'Min 3 characters';
-      }],
+      rules: {
+        required: [function (v) {
+          return !!v || '必須項目です';
+        }],
+        numberVal: [function (v) {
+          return !!v || '必須項目です';
+        }, function (v) {
+          return !!/^[0-9]+$/.test(v) || '半角数字で入力してください';
+        }]
+      },
       //リストからのデータ
       date: '',
       bank: '',
@@ -5740,31 +5757,34 @@ __webpack_require__.r(__webpack_exports__);
     //アップデートを送信
     sendUpdate: function sendUpdate() {
       var _this2 = this;
-      var sendUpdateData = {
-        bank: this.bank,
-        workplace: this.workplace,
-        date: this.date,
-        money: this.money,
-        id: this.id
-      };
-      axios.post(_const__WEBPACK_IMPORTED_MODULE_0__["default"].API_URL.update, sendUpdateData).then(function (response) {
-        var res = response.data; //レスポンスデータ
+      var validationFlag = this.$refs.newForm.validate();
+      if (validationFlag) {
+        var sendUpdateData = {
+          bank: this.bank,
+          workplace: this.workplace,
+          date: this.date,
+          money: this.money,
+          id: this.id
+        };
+        axios.post(_const__WEBPACK_IMPORTED_MODULE_0__["default"].API_URL.update, sendUpdateData).then(function (response) {
+          var res = response.data; //レスポンスデータ
 
-        if (res.status === 'true') {
-          return {
-            status: true,
-            message: "データが送信されました"
-          };
-        } else {
-          return {
-            status: false,
-            message: "データが送信できませんでした"
-          };
-        }
-      }).then(function (result) {
-        _this2.$emit('showAlert', result); //メッセージの表示
-        _this2.hideModal(); //モーダルの削除
-      });
+          if (res.status === 'true') {
+            return {
+              status: true,
+              message: "データが送信されました"
+            };
+          } else {
+            return {
+              status: false,
+              message: "データが送信できませんでした"
+            };
+          }
+        }).then(function (result) {
+          _this2.$emit('showAlert', result); //メッセージの表示
+          _this2.hideModal(); //モーダルの削除
+        });
+      }
     },
 
     sendDelete: function sendDelete() {
@@ -6143,11 +6163,14 @@ var render = function render() {
     attrs: {
       justify: "center"
     }
-  }, [_c("v-card", [_c("v-card-title", [_vm._v("新規登録")]), _vm._v(" "), _c("v-form", [_c("v-card-text", [_c("v-text-field", {
+  }, [_c("v-card", [_c("v-card-title", [_vm._v("新規登録")]), _vm._v(" "), _c("v-form", {
+    ref: "newForm"
+  }, [_c("v-card-text", [_c("v-text-field", {
     attrs: {
       label: "日付",
       "hide-details": "auto",
-      type: "date"
+      type: "date",
+      rules: _vm.rules.required
     },
     model: {
       value: _vm.date,
@@ -6166,7 +6189,8 @@ var render = function render() {
   }, [_c("v-text-field", {
     attrs: {
       label: "会社名",
-      "hide-details": "auto"
+      "hide-details": "auto",
+      rules: _vm.rules.required
     },
     model: {
       value: _vm.workplace,
@@ -6232,7 +6256,8 @@ var render = function render() {
   }, [_c("v-text-field", {
     attrs: {
       label: "銀行名",
-      "hide-details": "auto"
+      "hide-details": "auto",
+      rules: _vm.rules.required
     },
     model: {
       value: _vm.bank,
@@ -6292,7 +6317,8 @@ var render = function render() {
     attrs: {
       label: "金額",
       "hide-details": "auto",
-      suffix: "円"
+      suffix: "円",
+      rules: _vm.rules.numberVal
     },
     model: {
       value: _vm.money,
@@ -6398,10 +6424,12 @@ var render = function render() {
       },
       expression: "dialog"
     }
-  }, [_c("v-card", [_c("v-card-title", [_vm._v(_vm._s(_vm.title))]), _vm._v(" "), _c("v-card-subtitle", [_vm._v(_vm._s(_vm.subTitle))]), _vm._v(" "), _c("v-form", [_c("v-card-text", [_c("v-text-field", {
+  }, [_c("v-card", [_c("v-card-title", [_vm._v(_vm._s(_vm.title))]), _vm._v(" "), _c("v-card-subtitle", [_vm._v(_vm._s(_vm.subTitle))]), _vm._v(" "), _c("v-form", {
+    ref: "newForm"
+  }, [_c("v-card-text", [_c("v-text-field", {
     attrs: {
       label: "日付",
-      rules: _vm.rules,
+      rules: _vm.rules.required,
       "hide-details": "auto",
       readonly: !_vm.update,
       type: "date"
@@ -6416,7 +6444,7 @@ var render = function render() {
   }), _vm._v(" "), _c("v-text-field", {
     attrs: {
       label: "会社名",
-      rules: _vm.rules,
+      rules: _vm.rules.required,
       "hide-details": "auto",
       readonly: !_vm.update
     },
@@ -6430,7 +6458,7 @@ var render = function render() {
   }), _vm._v(" "), _c("v-text-field", {
     attrs: {
       label: "銀行名",
-      rules: _vm.rules,
+      rules: _vm.rules.required,
       "hide-details": "auto",
       readonly: !_vm.update
     },
@@ -6444,7 +6472,7 @@ var render = function render() {
   }), _vm._v(" "), _c("v-text-field", {
     attrs: {
       label: "金額",
-      rules: _vm.rules,
+      rules: _vm.rules.numberVal,
       "hide-details": "auto",
       readonly: !_vm.update,
       suffix: "円"
