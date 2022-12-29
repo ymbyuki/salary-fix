@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use function Psy\debug;
 
 class Salary extends Model
 {
@@ -83,13 +84,16 @@ class Salary extends Model
     }
 
     /**
-     * 登録処理
+     * アップデート処理
      */
     public function itemUpdate($item)
     {
         $data = $item;
         $validatedData = $data->validate([
-            'money' => ['numeric'],
+            'money' => 'numeric|required',
+            'date' => 'required' ,
+            'bank' => 'required',
+            'workplace' => 'required',
         ]);
         try {
             $result = Salary::where('id', $item->id)->update([
@@ -148,7 +152,8 @@ class Salary extends Model
         return $bankList;
     }
 
-    public function selectWorkplacekList() {
+    public function selectWorkplacekList()
+    {
         $auth = auth()->user()->id;
         $workplaceList = Salary::select('workplace')->where('deleted_at', null)->where('user_id', $auth)->groupBy('workplace')->get();
         return $workplaceList;
@@ -161,7 +166,10 @@ class Salary extends Model
     {
         $data = $item;
         $validatedData = $data->validate([
-            'money' => 'required|numeric',
+            'money' => 'numeric|required',
+            'date' => 'required' ,
+            'bank' => 'required',
+            'workplace' => 'required',
         ]);
         try {
             $item = new \App\Models\Salary;
